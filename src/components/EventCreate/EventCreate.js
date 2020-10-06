@@ -1,0 +1,67 @@
+import React from 'react'
+import axios from 'axios'
+import apiUrl from '../../apiConfig'
+import { Redirect } from 'react-router-dom'
+
+class EventCreate extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      event: {
+        title: '',
+        notes: '',
+        date: ''
+      },
+      createdEventId: ''
+    }
+  }
+
+  handleChange = (event) => {
+    // get value the user typed in
+    const userInput = event.target.value
+    // get the name of the input they typed in
+    const eventKey = event.target.name
+    // make a copy of the state
+    const eventCopy = Object.assign({}, this.state.event)
+    // updating the key in our copy with what the user typed
+    eventCopy[eventKey] = userInput
+    // updating the state with our new copy
+    this.setState({ event: eventCopy })
+  }
+
+  handleSubmit = (event) => {
+    event.preventDefault()
+    const handleEvent = this.state.event
+    // make POST request to API /games route with book data
+    axios({
+      url: `${apiUrl}/events`,
+      method: 'POST',
+      data: {
+        event: handleEvent
+      }
+    })
+      .then((response) => this.setState({ createdEventId: response.data.event._id }))
+      .catch(console.error)
+  }
+
+  render () {
+    console.log(this.state.event)
+    if (this.state.createdEventId !== '') {
+      return <Redirect to="/events" />
+    }
+
+    return (
+      <div>
+        <h2>Event Create</h2>
+        <form onSubmit={this.handleSubmit}>
+          <input name="title" type="text" placeholder="Title" value={this.state.event.title} onChange={this.handleChange}/>
+          <input name="notes" type="text" placeholder="Notes" value={this.state.event.notes} onChange={this.handleChange} />
+          <input name="date" type="text" placeholder="Date" value={this.state.event.date} onChange={this.handleChange} />
+          <input type="submit" value="Submit" />
+        </form>
+      </div>
+    )
+  }
+}
+
+export default EventCreate
