@@ -57,7 +57,9 @@ class App extends Component {
           )} />
         </main>
         <div>
-          <Route exact path="/" component={EventCreate}/>
+          <Route exact path="/" user={user} render={() => (
+            <EventCreate user={user}/>
+          )}/>
         </div>
       </Fragment>
     )

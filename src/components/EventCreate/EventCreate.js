@@ -32,10 +32,14 @@ class EventCreate extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault()
     const handleEvent = this.state.event
+    console.log('CONSOLE LOG HERE', this.props)
     // make POST request to API /games route with book data
     axios({
       url: `${apiUrl}/events`,
       method: 'POST',
+      headers: {
+        'Authorization': `Token token=${this.props.user.token}`
+      },
       data: {
         event: handleEvent
       }
