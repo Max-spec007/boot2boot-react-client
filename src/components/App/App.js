@@ -9,6 +9,8 @@ import SignIn from '../SignIn/SignIn'
 import SignOut from '../SignOut/SignOut'
 import ChangePassword from '../ChangePassword/ChangePassword'
 import EventCreate from '../EventCreate/EventCreate'
+import EventIndex from '../EventIndex/EventIndex'
+import EventShow from '../EventShow/EventShow'
 
 class App extends Component {
   constructor () {
@@ -30,6 +32,8 @@ class App extends Component {
 
   render () {
     const { msgAlerts, user } = this.state
+    console.log('USER IS', user)
+    console.log('THIS.STATE CONTAINS', this.state)
 
     return (
       <Fragment>
@@ -59,6 +63,16 @@ class App extends Component {
         <div>
           <Route exact path="/" user={user} render={() => (
             <EventCreate user={user}/>
+          )}/>
+        </div>
+        <div>
+          <Route exact path="/events" user={user} render={() => (
+            <EventIndex user={user}/>
+          )}/>
+        </div>
+        <div>
+          <Route path="/events/:id" user={user} render={props => (
+            <EventShow user={user} match={props.match}/>
           )}/>
         </div>
       </Fragment>
