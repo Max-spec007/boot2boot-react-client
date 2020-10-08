@@ -18,15 +18,15 @@ const unauthenticatedOptions = (
 
 const alwaysOptions = (
   <Fragment>
-    <Nav.Link href="#/">Create</Nav.Link>
-    <Nav.Link href="#/events">Events</Nav.Link>
+    <Nav.Link href="#/create">Create</Nav.Link>
+    <Nav.Link href="#/">Events</Nav.Link>
   </Fragment>
 )
 
 const Header = ({ user }) => (
   <Navbar bg="primary" variant="dark" expand="md">
     <Navbar.Brand href="#">
-      boot2boot-react-client
+      Surprise, SURPRISE!
     </Navbar.Brand>
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     <Navbar.Collapse id="basic-navbar-nav">

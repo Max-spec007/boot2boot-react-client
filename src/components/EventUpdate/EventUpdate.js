@@ -3,7 +3,7 @@ import axios from 'axios'
 import apiUrl from '../../apiConfig'
 import { Redirect } from 'react-router-dom'
 
-class EventCreate extends React.Component {
+class EventUpdate extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -12,49 +12,58 @@ class EventCreate extends React.Component {
         notes: '',
         date: ''
       },
-      createdEventId: ''
+      isLoaded: false,
+      isUpdated: false
     }
   }
-
+  componentDidMount () {
+    axios.get(apiUrl + '/events/' + this.props.match.params.id)
+      .then(response => {
+        this.setState({
+          isLoaded: true,
+          event: response.data.event
+        })
+      })
+      .catch(console.error)
+  }
   handleChange = (event) => {
     // get value the user typed in
     const userInput = event.target.value
     // get the name of the input they typed in
-    const eventKey = event.target.name
-    // make a copy of the state
+    const eventKey = event.target.name // "title" or "author"
+    // make a copy of the state (copy this javascript object)
     const eventCopy = Object.assign({}, this.state.event)
     // updating the key in our copy with what the user typed
     eventCopy[eventKey] = userInput
     // updating the state with our new copy
     this.setState({ event: eventCopy })
   }
-
   handleSubmit = (event) => {
     event.preventDefault()
-    const handleEvent = this.state.event
+    const newEvent = this.state.event
     // make POST request to API /games route with book data
     axios({
-      url: `${apiUrl}/events`,
-      method: 'POST',
+      url: `${apiUrl}/events/${this.props.match.params.id}`,
+      method: 'PATCH',
       headers: {
         'Authorization': `Token token=${this.props.user.token}`
       },
       data: {
-        event: handleEvent
+        event: newEvent
       }
     })
-      .then((response) => this.setState({ createdEventId: response.data.event._id }))
+      .then((response) => this.setState({ isUpdated: true }))
       .catch(console.error)
   }
-
   render () {
-    if (this.state.createdEventId !== '') {
+    // console.log('in BookUpdate, props', this.props)
+    // console.log('state is', this.state)
+    if (this.state.isUpdated !== false) {
       return <Redirect to="/" />
     }
-
     return (
       <div>
-        <h2>Event Create</h2>
+        <h2>Event Update</h2>
         <form onSubmit={this.handleSubmit}>
           <input name="title" type="text" placeholder="Title" value={this.state.event.title} onChange={this.handleChange}/>
           <input name="notes" type="text" placeholder="Notes" value={this.state.event.notes} onChange={this.handleChange} />
@@ -65,5 +74,4 @@ class EventCreate extends React.Component {
     )
   }
 }
-
-export default EventCreate
+export default EventUpdate

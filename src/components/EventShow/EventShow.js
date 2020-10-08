@@ -12,11 +12,9 @@ class EventShow extends React.Component {
     }
   }
   componentDidMount () {
-    console.log('PROPS HERE', this.props)
     axios.get(apiUrl + '/events/' + this.props.match.params.id)
       .then(response => {
         // troubleshoot step 1 - are we getting a response from the API?
-        console.log(response)
         this.setState({
           isLoaded: true,
           event: response.data.event
@@ -38,8 +36,6 @@ class EventShow extends React.Component {
   }
   render () {
     // troubleshoot step 2 - is the render for BookShow.js being called?
-    console.log('TRYING TO SEE PROPS', this.props)
-    console.log('rendering EventShow.js')
     let jsx
     // while the book is loading
     if (this.state.isLoaded === false) {
