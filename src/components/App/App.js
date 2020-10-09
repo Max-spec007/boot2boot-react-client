@@ -12,6 +12,7 @@ import EventCreate from '../EventCreate/EventCreate'
 import EventIndex from '../EventIndex/EventIndex'
 import EventShow from '../EventShow/EventShow'
 import EventUpdate from '../EventUpdate/EventUpdate'
+import EventRSVP from '../EventRSVP/EventRSVP'
 
 class App extends Component {
   constructor () {
@@ -61,7 +62,7 @@ class App extends Component {
         </main>
         <div>
           <Route exact path="/create" user={user} render={() => (
-            <EventCreate user={user}/>
+            <EventCreate user={user} msgAlert={this.msgAlert}/>
           )}/>
         </div>
         <div>
@@ -71,12 +72,17 @@ class App extends Component {
         </div>
         <div>
           <Route path="/events/:id" user={user} render={props => (
-            <EventShow user={user} match={props.match}/>
+            <EventShow user={user} msgAlert={this.msgAlert} match={props.match}/>
           )}/>
         </div>
         <div>
           <Route path="/events/:id" user={user} render={props => (
             <EventUpdate user={user} match={props.match}/>
+          )}/>
+        </div>
+        <div>
+          <Route path="/events/:id/rsvps" user={user} render={props => (
+            <EventRSVP user={user} msgAlert={this.msgAlert} match={props.match}/>
           )}/>
         </div>
       </Fragment>

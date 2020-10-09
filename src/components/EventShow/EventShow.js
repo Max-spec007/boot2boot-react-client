@@ -1,6 +1,8 @@
 import React from 'react'
 import axios from 'axios'
 import apiUrl from '../../apiConfig'
+import { withRouter } from 'react-router-dom'
+import messages from '../AutoDismissAlert/messages'
 
 class EventShow extends React.Component {
   constructor (props) {
@@ -31,8 +33,41 @@ class EventShow extends React.Component {
         'Authorization': `Token token=${this.props.user.token}`
       }
     })
-      .then(() => this.setState({ deleted: true }))
+      .then(() => {
+        this.props.msgAlert({
+          heading: 'Successfully Deleted',
+          message: messages.deleteEventSuccess,
+          variant: 'success'
+        })
+        this.props.history.push('/')
+      })
+      // don't need the deleted state, instead just gonna redirect home
+      // right after the axios call success
       .catch(console.error)
+  }
+  rsvp = (event) => {
+    event.preventDefault()
+    // get the user id
+    const userId = this.props.user._id
+    // copy this.state.event into an empty object so we can change the state
+    const copyEvent = Object.assign({}, this.state.event)
+    console.log(userId)
+    console.log(copyEvent.rsvps)
+    if (copyEvent.rsvps.every(person => person !== userId)) {
+      copyEvent.rsvps.push(userId)
+    }
+    this.setState({ event: copyEvent })
+
+    axios({
+      url: `${apiUrl}/events/${this.props.match.params.id}`,
+      method: 'PATCH',
+      headers: {
+        'Authorization': `Token token=${this.props.user.token}`
+      },
+      data: {
+        event: copyEvent
+      }
+    })
   }
   render () {
     // troubleshoot step 2 - is the render for BookShow.js being called?
@@ -50,6 +85,7 @@ class EventShow extends React.Component {
             <li>{this.state.event.date}</li>
           </ul>
           <button onClick={this.destroy}>Delete Event</button>
+          <button onClick={this.rsvp}>RSVP TO EVENT</button>
         </div>
       )
     }
@@ -61,4 +97,5 @@ class EventShow extends React.Component {
     )
   }
 }
-export default EventShow
+export default withRouter(EventShow)
+// withRouter we can get access to this.props.history

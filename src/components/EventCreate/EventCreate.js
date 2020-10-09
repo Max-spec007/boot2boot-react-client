@@ -2,6 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import apiUrl from '../../apiConfig'
 import { Redirect } from 'react-router-dom'
+import messages from '../AutoDismissAlert/messages'
 
 class EventCreate extends React.Component {
   constructor (props) {
@@ -43,7 +44,14 @@ class EventCreate extends React.Component {
         event: handleEvent
       }
     })
-      .then((response) => this.setState({ createdEventId: response.data.event._id }))
+      .then((response) => {
+        this.setState({ createdEventId: response.data.event._id })
+        this.props.msgAlert({
+          heading: 'Successfully Created',
+          message: messages.createEventSuccess,
+          variant: 'success'
+        })
+      })
       .catch(console.error)
   }
 
