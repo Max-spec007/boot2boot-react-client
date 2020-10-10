@@ -12,7 +12,6 @@ import EventCreate from '../EventCreate/EventCreate'
 import EventIndex from '../EventIndex/EventIndex'
 import EventShow from '../EventShow/EventShow'
 import EventUpdate from '../EventUpdate/EventUpdate'
-import EventRSVP from '../EventRSVP/EventRSVP'
 
 class App extends Component {
   constructor () {
@@ -71,7 +70,7 @@ class App extends Component {
           )}/>
         </div>
         <div>
-          <Route path="/events/:id" user={user} render={props => (
+          <AuthenticatedRoute path="/events/:id" user={user} render={props => (
             <EventShow user={user} msgAlert={this.msgAlert} match={props.match}/>
           )}/>
         </div>
@@ -80,11 +79,7 @@ class App extends Component {
             <EventUpdate user={user} match={props.match}/>
           )}/>
         </div>
-        <div>
-          <Route path="/events/:id/rsvps" user={user} render={props => (
-            <EventRSVP user={user} msgAlert={this.msgAlert} match={props.match}/>
-          )}/>
-        </div>
+
       </Fragment>
     )
   }

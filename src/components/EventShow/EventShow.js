@@ -47,27 +47,58 @@ class EventShow extends React.Component {
   }
   rsvp = (event) => {
     event.preventDefault()
-    // get the user id
-    const userId = this.props.user._id
-    // copy this.state.event into an empty object so we can change the state
-    const copyEvent = Object.assign({}, this.state.event)
-    console.log(userId)
-    console.log(copyEvent.rsvps)
-    if (copyEvent.rsvps.every(person => person !== userId)) {
-      copyEvent.rsvps.push(userId)
+    console.log('CONSOLE HERE', this.props.user._id)
+    console.log('SECOND CONSOLE', this.state.event.rsvps)
+    if (this.state.event.rsvps.every(rsvp => rsvp.owner._id !== this.props.user._id)) {
+      axios({
+        url: `${apiUrl}/rsvps`,
+        method: 'POST',
+        headers: {
+          'Authorization': `Token token=${this.props.user.token}`
+        },
+        data: {
+          eventId: this.props.match.params.id
+        }
+      })
+        .then(() => {
+          axios.get(apiUrl + '/events/' + this.props.match.params.id)
+            .then(response => {
+              // troubleshoot step 1 - are we getting a response from the API?
+              this.setState({
+                isLoaded: true,
+                event: response.data.event
+              })
+            })
+            .catch(console.error)
+        })
+    } else {
+      this.props.msgAlert({
+        heading: 'YOU ALREADY HAVE AN RSVP',
+        message: 'RSVP UNSUCCESSFUL',
+        variant: 'danger'
+      })
     }
-    this.setState({ event: copyEvent })
-
+  }
+  destroyRSVP = (event) => {
+    event.preventDefault()
     axios({
-      url: `${apiUrl}/events/${this.props.match.params.id}`,
-      method: 'PATCH',
+      url: `${apiUrl}/rsvps/${this.props.match.params.id}`,
+      method: 'DELETE',
       headers: {
         'Authorization': `Token token=${this.props.user.token}`
-      },
-      data: {
-        event: copyEvent
       }
     })
+      .then(() => {
+        this.props.msgAlert({
+          heading: 'Successfully Deleted RSVP',
+          message: messages.deleteEventSuccess,
+          variant: 'success'
+        })
+        this.props.history.push('/')
+      })
+      // don't need the deleted state, instead just gonna redirect home
+      // right after the axios call success
+      .catch(console.error)
   }
   render () {
     // troubleshoot step 2 - is the render for BookShow.js being called?
@@ -86,6 +117,12 @@ class EventShow extends React.Component {
           </ul>
           <button onClick={this.destroy}>Delete Event</button>
           <button onClick={this.rsvp}>RSVP TO EVENT</button>
+          <button onClick={this.destroyRSVP}>DELETE RSVP</button>
+          <ul>
+            {this.state.event.rsvps.map(rsvp => (
+              <li key={rsvp.owner._id}>{rsvp.owner.email}</li>
+            ))}
+          </ul>
         </div>
       )
     }

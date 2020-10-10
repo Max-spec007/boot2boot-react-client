@@ -56,8 +56,6 @@ class EventUpdate extends React.Component {
       .catch(console.error)
   }
   render () {
-    // console.log('in BookUpdate, props', this.props)
-    // console.log('state is', this.state)
     if (this.state.isUpdated !== false) {
       return <Redirect to="/" />
     }
