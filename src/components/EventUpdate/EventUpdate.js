@@ -60,7 +60,7 @@ class EventUpdate extends React.Component {
       return <Redirect to="/" />
     }
     return (
-      <div>
+      <div className='event-update'>
         <h2>Event Update</h2>
         <form onSubmit={this.handleSubmit}>
           <input name="title" type="text" placeholder="Title" value={this.state.event.title} onChange={this.handleChange}/>

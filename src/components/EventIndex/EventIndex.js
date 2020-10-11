@@ -40,7 +40,7 @@ class EventIndex extends React.Component {
       )
     }
     return (
-      <div>
+      <div className='events-page'>
         <h2>Events Page</h2>
         {jsx}
       </div>

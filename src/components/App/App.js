@@ -79,7 +79,6 @@ class App extends Component {
             <EventUpdate user={user} match={props.match}/>
           )}/>
         </div>
-
       </Fragment>
     )
   }

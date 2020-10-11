@@ -116,8 +116,8 @@ class EventShow extends React.Component {
             <li>{this.state.event.date}</li>
           </ul>
           <button onClick={this.destroy}>Delete Event</button>
-          <button onClick={this.rsvp}>RSVP TO EVENT</button>
-          <button onClick={this.destroyRSVP}>DELETE RSVP</button>
+          <button onClick={this.rsvp}>RSVP To Event</button>
+          <button onClick={this.destroyRSVP}>Delete RSVP</button>
           <ul>
             {this.state.event.rsvps.map(rsvp => (
               <li key={rsvp.owner._id}>{rsvp.owner.email}</li>
@@ -127,7 +127,7 @@ class EventShow extends React.Component {
       )
     }
     return (
-      <div>
+      <div className='event-page'>
         <h2>Event Page</h2>
         {jsx}
       </div>

@@ -61,7 +61,7 @@ class EventCreate extends React.Component {
     }
 
     return (
-      <div>
+      <div className='create'>
         <h2>Event Create</h2>
         <form onSubmit={this.handleSubmit}>
           <input name="title" type="text" placeholder="Title" value={this.state.event.title} onChange={this.handleChange}/>
