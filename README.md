@@ -10,8 +10,8 @@ Deployed sites:
 - front end: https://boot2boot.github.io/boot2boot-react-client/#/
 - back end: https://gentle-eyrie-69733.herokuapp.com/
 
-ERD: https://imgur.com/3AU0wdE
-Wireframe: https://imgur.com/bvJcSJu
+ERD: ![](https://imgur.com/3AU0wdE)
+Wireframe: ![](https://imgur.com/bvJcSJu)
 
 This application is the front-end portion of an Event site.  Users can create events, and other users can RSVP to said events in order to attend them.  More specifically, a user can create an event, update their own event, and other users can RSVP (but not create or edit) other user events.  Think of this like a calendar/event app that could be used for a wedding or other social events.
 
