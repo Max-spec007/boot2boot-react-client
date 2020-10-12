@@ -47,8 +47,6 @@ class EventShow extends React.Component {
   }
   rsvp = (event) => {
     event.preventDefault()
-    console.log('CONSOLE HERE', this.props.user._id)
-    console.log('SECOND CONSOLE', this.state.event.rsvps)
     if (this.state.event.rsvps.every(rsvp => rsvp.owner._id !== this.props.user._id)) {
       axios({
         url: `${apiUrl}/rsvps`,
