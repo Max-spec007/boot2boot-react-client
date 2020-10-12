@@ -60,7 +60,7 @@ class App extends Component {
           )} />
         </main>
         <div>
-          <Route exact path="/create" user={user} render={() => (
+          <AuthenticatedRoute path="/create" user={user} render={() => (
             <EventCreate user={user} msgAlert={this.msgAlert}/>
           )}/>
         </div>
