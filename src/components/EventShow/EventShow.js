@@ -101,10 +101,15 @@ class EventShow extends React.Component {
   render () {
     // troubleshoot step 2 - is the render for BookShow.js being called?
     let jsx
+
     // while the book is loading
     if (this.state.isLoaded === false) {
       jsx = <p>Loading...</p>
     } else {
+      let button = ''
+      if (this.state.event.rsvps.some(rsvp => rsvp.owner._id === this.props.user._id)) {
+        button = <button onClick={this.destroyRSVP}>Delete RSVP</button>
+      }
       jsx = (
         <div>
           <ul>
@@ -115,7 +120,7 @@ class EventShow extends React.Component {
           </ul>
           <button onClick={this.destroy}>Delete Event</button>
           <button onClick={this.rsvp}>RSVP To Event</button>
-          <button onClick={this.destroyRSVP}>Delete RSVP</button>
+          {button}
           <ul>
             {this.state.event.rsvps.map(rsvp => (
               <li key={rsvp.owner._id}>{rsvp.owner.email}</li>
