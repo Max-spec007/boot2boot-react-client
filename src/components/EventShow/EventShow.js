@@ -3,7 +3,6 @@ import axios from 'axios'
 import apiUrl from '../../apiConfig'
 import { withRouter } from 'react-router-dom'
 import messages from '../AutoDismissAlert/messages'
-
 class EventShow extends React.Component {
   constructor (props) {
     super(props)
@@ -101,7 +100,6 @@ class EventShow extends React.Component {
   render () {
     // troubleshoot step 2 - is the render for BookShow.js being called?
     let jsx
-
     // while the book is loading
     if (this.state.isLoaded === false) {
       jsx = <p>Loading...</p>
@@ -109,6 +107,10 @@ class EventShow extends React.Component {
       let button = ''
       if (this.state.event.rsvps.some(rsvp => rsvp.owner._id === this.props.user._id)) {
         button = <button onClick={this.destroyRSVP}>Delete RSVP</button>
+      }
+      let deleteButton = ''
+      if (this.state.event.owner === this.props.user._id) {
+        deleteButton = <button onClick={this.destroy}>Delete Event</button>
       }
       jsx = (
         <div>
@@ -118,7 +120,7 @@ class EventShow extends React.Component {
             <li>{this.state.event.notes}</li>
             <li>{this.state.event.date}</li>
           </ul>
-          <button onClick={this.destroy}>Delete Event</button>
+          {deleteButton}
           <button onClick={this.rsvp}>RSVP To Event</button>
           {button}
           <ul>
