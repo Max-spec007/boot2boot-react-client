@@ -3,12 +3,12 @@
 brought to you by Riad, Max, and Miles: github usernames - milescogan92, max-spec007, riadjm
 
 Github repos:
-- API: https://github.com/Boot2boot/boot2boot-api
-- React: https://github.com/Boot2boot/boot2boot-react-client
+- API: https://github.com/Max-spec007/boot2boot-api
+- React: https://github.com/Max-spec007/boot2boot-react-client
 
 Deployed sites:
-- front end: https://boot2boot.github.io/boot2boot-react-client/#/
-- back end: https://gentle-eyrie-69733.herokuapp.com/
+- front end: https://max-spec007.github.io/boot2boot-react-client/#/
+- back end: https://surprise-surprise-api.herokuapp.com/
 
 ERD: https://imgur.com/3AU0wdE
 Wireframe: https://imgur.com/bvJcSJu
